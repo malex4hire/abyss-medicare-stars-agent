@@ -52,12 +52,35 @@ After deployment, the script prints the authenticated proxy command. Open the AD
 | Data classification | Synthetic aggregate rows; no member-level fields exist |
 | SQL authority | Fixed, reviewed SQL; the model cannot author SQL |
 | Query cost | BigQuery dry run plus a 100 MB `maximum_bytes_billed` ceiling |
+| Model cost | Per-invocation Vertex AI token accounting and versioned list-price estimate |
 | Output size | Maximum 25 evidence rows |
 | Statistical rule | Two-proportion z-score threshold of −1.96 |
 | Process environment | MCP child receives only an allowlisted set of GCP variables |
 | Deployment access | Authenticated Cloud Run only |
 
 The LLM decides when the approved tool is useful and explains returned evidence. It does not decide which dataset, SQL statement, cost ceiling, statistical threshold, or fields are authorized.
+
+## LLM usage and spend visibility
+
+Every invocation meters all Vertex AI model calls in the agent/tool cycle. The
+post-model callback accumulates prompt, tool-result, cached-input, response, and
+reasoning tokens, then appends a deterministic cost footer after generation. The
+same record is available in ADK invocation state and response metadata and is
+written as structured JSON for Cloud Logging.
+
+The estimate uses versioned Gemini 2.5 Flash standard list prices configured by
+the deployment. It is immediate operational telemetry, not an invoice. Google
+Cloud Billing remains authoritative for actual charges, credits, and negotiated
+pricing.
+
+See recent per-invocation estimates recorded by the deployed service:
+
+```bash
+./spend
+```
+
+The default view covers seven days and 25 requests. Both are adjustable without
+editing the script, for example: `FRESHNESS=30d LIMIT=100 ./spend`.
 
 ## Architecture
 
@@ -146,7 +169,7 @@ This working demo proves the ability to build and deploy:
 - MCP-based tool access
 - BigQuery analytics
 - Input and output orchestration
-- Guardrails and cost controls
+- Guardrails, BigQuery cost controls, and per-request LLM spend estimates
 - A private Cloud Run deployment
 - Traceable tool calls and evidence
 
@@ -158,6 +181,8 @@ This is a working architectural slice of a Medicare Stars agentic system—not a
 - [Google ADK MCP tools and deployment patterns](https://adk.dev/tools-custom/mcp-tools/)
 - [Deploy Google ADK agents to Cloud Run](https://adk.dev/deploy/cloud-run/)
 - [BigQuery dry-run queries](https://cloud.google.com/bigquery/docs/samples/bigquery-query-dry-run)
+- [Vertex AI generative AI pricing](https://cloud.google.com/vertex-ai/generative-ai/pricing)
+- [Google Cloud Billing reports](https://cloud.google.com/billing/docs/how-to/reports)
 
 ## License
 

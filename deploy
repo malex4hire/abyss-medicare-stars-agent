@@ -56,7 +56,7 @@ gcloud run deploy "$SERVICE" \
   --cpu=1 \
   --memory=1Gi \
   --timeout=300 \
-  --set-env-vars="GOOGLE_CLOUD_PROJECT=${PROJECT_ID},GOOGLE_CLOUD_LOCATION=${REGION},GOOGLE_GENAI_USE_VERTEXAI=true,MODEL=gemini-2.5-flash" \
+  --set-env-vars="GOOGLE_CLOUD_PROJECT=${PROJECT_ID},GOOGLE_CLOUD_LOCATION=${REGION},GOOGLE_GENAI_USE_VERTEXAI=true,MODEL=gemini-2.5-flash,LLM_INPUT_USD_PER_MILLION=0.30,LLM_CACHED_INPUT_USD_PER_MILLION=0.03,LLM_OUTPUT_USD_PER_MILLION=2.50,LLM_PRICING_VERSION=vertex-ai-standard-2026-09-19" \
   --quiet
 
 SERVICE_URL="$(gcloud run services describe "$SERVICE" --project="$PROJECT_ID" --region="$REGION" --format='value(status.url)')"

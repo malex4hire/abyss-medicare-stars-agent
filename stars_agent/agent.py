@@ -11,6 +11,8 @@ from google.adk.tools.mcp_tool import McpToolset
 from google.adk.tools.mcp_tool.mcp_session_manager import StdioConnectionParams
 from mcp import StdioServerParameters
 
+from observability.adk_cost_callback import track_llm_cost
+
 _root = Path(__file__).resolve().parents[1]
 _server = _root / "mcp_server.py"
 _mcp_env = {
@@ -28,7 +30,7 @@ root_agent = LlmAgent(
     model=os.environ.get("MODEL", "gemini-2.5-flash"),
     name="medicare_stars_evidence_agent",
     description="Analyzes aggregate Medicare Stars member-experience trends.",
-        instruction="""
+    instruction="""
 You are an evidence-first Medicare Stars analytical agent.
 Use analyze_member_experience for any factual trend claim. Never invent rows,
 member details, significance, dates, or causal explanations. Report contract
@@ -40,6 +42,7 @@ association from causation, and include the tool-returned controls in a short
 'Authority checks' section. If the tool rejects a request, explain the boundary
 without attempting a workaround.
 """.strip(),
+    after_model_callback=track_llm_cost,
     tools=[
         McpToolset(
             connection_params=StdioConnectionParams(
