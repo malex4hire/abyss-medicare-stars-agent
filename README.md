@@ -4,14 +4,20 @@
 
 # Abyss Medicare Stars Agent
 
-[![Verify](https://github.com/malex4hire/abyss-medicare-stars-agent/actions/workflows/verify.yml/badge.svg)](https://github.com/malex4hire/abyss-medicare-stars-agent/actions/workflows/verify.yml)
-![Python 3.11](https://img.shields.io/badge/Python-3.11-3776AB?logo=python&logoColor=white)
-![Google ADK 2.9.2+](https://img.shields.io/badge/Google_ADK-2.9.2%2B-4285F4)
-![Gemini 2.5 Flash](https://img.shields.io/badge/Gemini-2.5_Flash-8E75B2)
-![MCP 1.x](https://img.shields.io/badge/MCP-1.x-55D6BE)
-![FastAPI 0.116+](https://img.shields.io/badge/FastAPI-0.116%2B-009688?logo=fastapi&logoColor=white)
+![verify](https://github.com/malex4hire/abyss-medicare-stars-agent/actions/workflows/verify.yml/badge.svg)
+![Python](https://img.shields.io/badge/Python-3.11-3776AB?logo=python&logoColor=white)
+![Google ADK](https://img.shields.io/badge/Google_ADK-2.9.2%2B-4285F4?logo=googlecloud&logoColor=white)
+![Vertex AI](https://img.shields.io/badge/Vertex_AI-Managed_API-4285F4?logo=googlecloud&logoColor=white)
+![Gemini](https://img.shields.io/badge/Gemini-2.5_Flash-8E75B2?logo=googlegemini&logoColor=white)
+![MCP SDK](https://img.shields.io/badge/MCP_SDK-%3E%3D1.12%2C%3C2-00A67E)
+![FastMCP](https://img.shields.io/badge/FastMCP-SDK_server-7C3AED)
+![BigQuery](https://img.shields.io/badge/BigQuery-Standard_SQL-669DF6?logo=googlebigquery&logoColor=white)
+![Cloud Run](https://img.shields.io/badge/Cloud_Run-Private-4285F4?logo=googlecloud&logoColor=white)
+![Cloud Build](https://img.shields.io/badge/Cloud_Build-CI%2FCD-4285F4?logo=googlecloud&logoColor=white)
+![FastAPI](https://img.shields.io/badge/FastAPI-0.116%2B-009688?logo=fastapi&logoColor=white)
 ![OCI](https://img.shields.io/badge/Container-OCI-2496ED?logo=docker&logoColor=white)
-![Trivy enforced](https://img.shields.io/badge/Trivy-HIGH%2FCRITICAL_gate-1904DA)
+![Trivy](https://img.shields.io/badge/Trivy-HIGH%2FCRITICAL_gate-1904DA?logo=aqua&logoColor=white)A
+
 
 A deployable Google Cloud agent that identifies statistically meaningful declines in synthetic, aggregate Medicare member-experience measures—and proves that model tool use remains inside an independently enforced authority boundary.
 
