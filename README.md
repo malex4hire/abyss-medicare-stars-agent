@@ -44,6 +44,17 @@ The deployment command builds the OCI image in Google Cloud and deploys a **priv
 
 After deployment, the script prints the authenticated proxy command. Open the ADK interface locally at `http://localhost:8080` through that proxy.
 
+### Deployed proof
+
+<p align="center">
+  <img src="assets/deployed-evidence-cost.png" alt="Deployed Medicare Stars agent showing MCP evidence, authority checks, token usage, and estimated Vertex AI cost" width="100%">
+</p>
+
+The private Cloud Run deployment returns evidence and independently appended
+operational telemetry in the same invocation: enforced aggregate-only analysis,
+BigQuery query controls, model-call and token counts, and a versioned list-price
+estimate. The screenshot contains synthetic demonstration data only.
+
 ## What the agent can—and cannot—do
 
 | Boundary | Enforcement |
