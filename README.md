@@ -4,6 +4,15 @@
 
 # Abyss Medicare Stars Agent
 
+[![Verify](https://github.com/malex4hire/abyss-medicare-stars-agent/actions/workflows/verify.yml/badge.svg)](https://github.com/malex4hire/abyss-medicare-stars-agent/actions/workflows/verify.yml)
+![Python 3.11](https://img.shields.io/badge/Python-3.11-3776AB?logo=python&logoColor=white)
+![Google ADK 2.9.2+](https://img.shields.io/badge/Google_ADK-2.9.2%2B-4285F4)
+![Gemini 2.5 Flash](https://img.shields.io/badge/Gemini-2.5_Flash-8E75B2)
+![MCP 1.x](https://img.shields.io/badge/MCP-1.x-55D6BE)
+![FastAPI 0.116+](https://img.shields.io/badge/FastAPI-0.116%2B-009688?logo=fastapi&logoColor=white)
+![OCI](https://img.shields.io/badge/Container-OCI-2496ED?logo=docker&logoColor=white)
+![Trivy enforced](https://img.shields.io/badge/Trivy-HIGH%2FCRITICAL_gate-1904DA)
+
 A deployable Google Cloud agent that identifies statistically meaningful declines in synthetic, aggregate Medicare member-experience measures—and proves that model tool use remains inside an independently enforced authority boundary.
 
 > **Portfolio demonstration:** synthetic data only. No Aetna systems, CMS beneficiary records, PHI, clinical guidance, or production claims are used.
