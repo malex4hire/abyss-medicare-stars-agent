@@ -19,7 +19,7 @@
 ![Trivy](https://img.shields.io/badge/Trivy-HIGH%2FCRITICAL_gate-1904DA?logo=aqua&logoColor=white)
 
 
-A deployable Google Cloud agent that identifies statistically meaningful declines in synthetic, aggregate Medicare member-experience measures—and proves that model tool use remains inside an independently enforced authority boundary.
+A deployable Google Cloud agent that identifies statistically meaningful declines in synthetic, aggregate Medicare member-experience measures and proves that model tool use remains inside an independently enforced authority boundary.
 
 > **Portfolio demonstration:** synthetic data only. No Aetna systems, CMS beneficiary records, PHI, clinical guidance, or production claims are used.
 
