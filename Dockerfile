@@ -10,6 +10,10 @@ RUN apt-get update \
     && apt-get upgrade -y \
     && rm -rf /var/lib/apt/lists/*
 
+
+RUN python -m pip uninstall --yes setuptools wheel \
+    && python -m pip uninstall --yes pip
+
 WORKDIR /app
 COPY --from=build --chown=65532:65532 /install /app/site-packages
 COPY --chown=65532:65532 . /app
