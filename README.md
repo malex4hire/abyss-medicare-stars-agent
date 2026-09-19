@@ -111,13 +111,21 @@ editing the script, for example: `FRESHNESS=30d LIMIT=100 ./spend`.
 ## Architecture
 
 ```mermaid
-flowchart TD
-    Q[Aggregate trend question] --> A[Google ADK agent]
-    A --> M[Private MCP tool]
-    M --> P{Independent authority}
+  flowchart TD
+    U[User request] --> A[Google ADK agent]
+    A --> V[Vertex AI Gemini]
+    V --> M[MCP tool boundary]
+    M --> P[Deterministic authority policy]
+    P -->|Authorized| B[BigQuery dry run and query]
     P -->|Denied| D[Boundary response]
-    P -->|Authorized| B[BigQuery dry run + query]
-    B --> V[Evidence-backed answer]
+    B --> E[Aggregate evidence]
+    E --> V
+    V --> R[Validated response]
+    V --> O[Token and model usage callback]
+    O --> C[Versioned cost estimate]
+    C --> L[Cloud Logging]
+    L --> S["./spend"]
+```
 ```
 
 The MCP process is packaged beside the ADK agent and communicates over stdio. This keeps the demo self-contained while preserving a real protocol boundary. At larger scale, the same MCP server can move to authenticated Streamable HTTP without changing its capability contract.
