@@ -1,0 +1,67 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+cd "$ROOT_DIR"
+
+for command_name in gcloud bq; do
+  if ! command -v "$command_name" >/dev/null 2>&1; then
+    echo "Missing required command: $command_name" >&2
+    exit 1
+  fi
+done
+
+PROJECT_ID="${GOOGLE_CLOUD_PROJECT:-$(gcloud config get-value project 2>/dev/null)}"
+REGION="${GOOGLE_CLOUD_LOCATION:-us-east4}"
+SERVICE="${SERVICE_NAME:-medicare-stars-agent}"
+SERVICE_ACCOUNT_NAME="medicare-stars-agent"
+SERVICE_ACCOUNT="${SERVICE_ACCOUNT_NAME}@${PROJECT_ID}.iam.gserviceaccount.com"
+
+if [[ -z "$PROJECT_ID" || "$PROJECT_ID" == "(unset)" ]]; then
+  echo "No active Google Cloud project." >&2
+  exit 1
+fi
+
+export GOOGLE_CLOUD_PROJECT="$PROJECT_ID"
+scripts/bootstrap_gcp.sh
+gcloud services enable run.googleapis.com cloudbuild.googleapis.com artifactregistry.googleapis.com \
+  --project="$PROJECT_ID" --quiet
+
+PROJECT_NUMBER="$(gcloud projects describe "$PROJECT_ID" --format='value(projectNumber)')"
+BUILD_ACCOUNT="${PROJECT_NUMBER}-compute@developer.gserviceaccount.com"
+gcloud projects add-iam-policy-binding "$PROJECT_ID" \
+  --member="serviceAccount:${BUILD_ACCOUNT}" \
+  --role="roles/run.builder" --condition=None --quiet >/dev/null
+
+if ! gcloud iam service-accounts describe "$SERVICE_ACCOUNT" --project="$PROJECT_ID" >/dev/null 2>&1; then
+  gcloud iam service-accounts create "$SERVICE_ACCOUNT_NAME" \
+    --display-name="Medicare Stars demo runtime" --project="$PROJECT_ID"
+fi
+
+for role in roles/aiplatform.user roles/bigquery.jobUser roles/bigquery.dataViewer; do
+  gcloud projects add-iam-policy-binding "$PROJECT_ID" \
+    --member="serviceAccount:${SERVICE_ACCOUNT}" \
+    --role="$role" --condition=None --quiet >/dev/null
+done
+
+gcloud run deploy "$SERVICE" \
+  --source=. \
+  --project="$PROJECT_ID" \
+  --region="$REGION" \
+  --service-account="$SERVICE_ACCOUNT" \
+  --no-allow-unauthenticated \
+  --min=0 \
+  --max=1 \
+  --concurrency=4 \
+  --cpu=1 \
+  --memory=1Gi \
+  --timeout=300 \
+  --set-env-vars="GOOGLE_CLOUD_PROJECT=${PROJECT_ID},GOOGLE_CLOUD_LOCATION=${REGION},GOOGLE_GENAI_USE_VERTEXAI=true,MODEL=gemini-2.5-flash" \
+  --quiet
+
+SERVICE_URL="$(gcloud run services describe "$SERVICE" --project="$PROJECT_ID" --region="$REGION" --format='value(status.url)')"
+echo
+echo "Deployed privately: $SERVICE_URL"
+echo "Open it through an authenticated local proxy:"
+echo "  gcloud run services proxy $SERVICE --project=$PROJECT_ID --region=$REGION"
+echo "Then visit http://localhost:8080"

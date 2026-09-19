@@ -1,0 +1,16 @@
+contract_id,year,measure_code,measure_name,score,denominator
+H1001,2024,C01,Getting Needed Care,0.88,2400
+H1001,2025,C01,Getting Needed Care,0.82,2500
+H1001,2024,C02,Customer Service,0.91,2300
+H1001,2025,C02,Customer Service,0.90,2400
+H2042,2024,C01,Getting Needed Care,0.84,1800
+H2042,2025,C01,Getting Needed Care,0.83,1900
+H2042,2024,C02,Customer Service,0.89,1750
+H2042,2025,C02,Customer Service,0.82,1850
+H3307,2024,C01,Getting Needed Care,0.79,3100
+H3307,2025,C01,Getting Needed Care,0.80,3200
+H3307,2024,C02,Customer Service,0.86,3000
+H3307,2025,C02,Customer Service,0.81,3150
+H4410,2023,C01,Getting Needed Care,0.86,2050
+H4410,2024,C01,Getting Needed Care,0.87,2100
+H4410,2025,C01,Getting Needed Care,0.88,2200

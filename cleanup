@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+PROJECT_ID="${GOOGLE_CLOUD_PROJECT:-$(gcloud config get-value project 2>/dev/null)}"
+REGION="${GOOGLE_CLOUD_LOCATION:-us-east4}"
+SERVICE="${SERVICE_NAME:-medicare-stars-agent}"
+
+if [[ "${1:-}" != "--service" && "${1:-}" != "--all" ]]; then
+  echo "Usage: ./cleanup --service   # delete only Cloud Run service"
+  echo "       ./cleanup --all       # also delete the demo BigQuery dataset"
+  exit 2
+fi
+
+gcloud run services delete "$SERVICE" --project="$PROJECT_ID" --region="$REGION" --quiet
+echo "Deleted Cloud Run service: $SERVICE"
+
+if [[ "$1" == "--all" ]]; then
+  bq rm -r -f -d "${PROJECT_ID}:medicare_stars_demo"
+  echo "Deleted BigQuery dataset: ${PROJECT_ID}:medicare_stars_demo"
+fi
+
