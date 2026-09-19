@@ -4,7 +4,11 @@ WORKDIR /build
 COPY requirements.txt .
 RUN python -m pip install --no-cache-dir --target=/install -r requirements.txt
 
-FROM gcr.io/distroless/python3-debian12:nonroot
+FROM python:3.11-slim-bookworm AS runtime
+
+RUN apt-get update \
+    && apt-get upgrade -y \
+    && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 COPY --from=build --chown=65532:65532 /install /app/site-packages

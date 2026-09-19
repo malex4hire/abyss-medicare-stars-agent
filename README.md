@@ -39,7 +39,7 @@ The deployment command builds the OCI image in Google Cloud and deploys a **priv
 - zero minimum and one maximum instance;
 - a dedicated runtime service account;
 - Vertex AI and read-only BigQuery access;
-- a non-root, distroless runtime image;
+- a non-root, security-patched slim runtime image;
 - no public invocation permission.
 
 After deployment, the script prints the authenticated proxy command. Open the ADK interface locally at `http://localhost:8080` through that proxy.
@@ -137,7 +137,7 @@ The repository is the handoff unit. It contains:
 - synthetic data plus an idempotent BigQuery bootstrap;
 - private Cloud Run deployment and explicit cleanup commands;
 - bounded dependencies, unit tests, deterministic evaluations, linting, container builds, and Trivy CVE scanning in CI;
-- a multi-stage, non-root distroless OCI image usable by Docker, Podman, Cloud Build, Cloud Run, or Kubernetes.
+- a multi-stage, non-root, security-scanned OCI image usable by Docker, Podman, Cloud Build, Cloud Run, or Kubernetes.
 
 ## Verification
 
