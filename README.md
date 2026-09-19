@@ -16,7 +16,7 @@
 ![Cloud Build](https://img.shields.io/badge/Cloud_Build-CI%2FCD-4285F4?logo=googlecloud&logoColor=white)
 ![FastAPI](https://img.shields.io/badge/FastAPI-0.116%2B-009688?logo=fastapi&logoColor=white)
 ![OCI](https://img.shields.io/badge/Container-OCI-2496ED?logo=docker&logoColor=white)
-![Trivy](https://img.shields.io/badge/Trivy-HIGH%2FCRITICAL_gate-1904DA?logo=aqua&logoColor=white)A
+![Trivy](https://img.shields.io/badge/Trivy-HIGH%2FCRITICAL_gate-1904DA?logo=aqua&logoColor=white)
 
 
 A deployable Google Cloud agent that identifies statistically meaningful declines in synthetic, aggregate Medicare member-experience measures—and proves that model tool use remains inside an independently enforced authority boundary.
@@ -200,6 +200,12 @@ This working demo proves the ability to build and deploy:
 - Traceable tool calls and evidence
 
 This is a working architectural slice of a Medicare Stars agentic system—not a finished Medicare business application.
+
+### Production privacy upgrade
+
+This demonstration uses synthetic aggregate data and denies tested member-identity requests through deterministic policy. It does not claim general PHI detection or HIPAA compliance.
+
+A production implementation would add Presidio-based sensitive-data detection before model access and before response release, including custom recognizers for member identifiers, MRNs and Medicare Beneficiary Identifiers. Presidio would provide detection evidence; deterministic authority policy would continue to make the allow, deny or redact decision.
 
 ## References
 
