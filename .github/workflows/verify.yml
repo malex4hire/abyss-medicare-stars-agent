@@ -30,6 +30,7 @@ jobs:
         with:
           context: .
           load: true
+          pull: true
           tags: medicare-stars-agent:test
       - uses: aquasecurity/trivy-action@v0.36.0
         with:
